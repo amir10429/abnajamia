@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>২০২২ সমাপনী ছাত্রবৃন্দের তথ্য</title>
+    <style>
+        body {
+            font-family: SolaimanLipi, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('1.jpg') no-repeat center center;
+            background-size: 400px 400px;
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #34495e;
+        }
+
+        .search-box {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .search-box input {
+            width: 80%;
+            max-width: 400px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: rgba(199, 236, 238, 0.9);
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 10px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .serial-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 50%;
+        }
+
+        .card h3 {
+            margin: 10px 0;
+            font-size: 30px;
+            color: #2c3e50;
+            font-weight: bold;
+            text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .card p {
+            margin: 5px 0;
+            font-size: 20px;
+        }
+
+        .actions {
+            margin-top: 10px;
+        }
+
+        .actions a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: white;
+            background-color: #6ab04c;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .actions a:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Watermark -->
+    <div class="background"></div>
+
+    <!-- Header -->
+    <h1>২০২২-এর সমাপনী ছাত্রবৃন্দের তথ্য</h1>
+
+    <!-- Search Box -->
+    <div class="search-box">
+        <input
+            type="text"
+            id="search-input"
+            placeholder="সার্চ করুন..."
+            oninput="searchCards()"
+        />
+    </div>
+
+    <!-- Cards Container -->
+    <div class="container" id="card-container">
+        <!-- Individual Cards will be dynamically added here -->
+    </div>
+
+    <script>
+        // Function to create a card
+        function createCard(serial, name, mobile, address, year, designation) {
+            const container = document.getElementById('card-container');
+
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.setAttribute("data-search", `${name} ${address} ${year} ${designation}`.toLowerCase());
+
+            card.innerHTML = `
+                <div class="serial-number">${serial}</div>
+                <h3>${name}</h3>
+                <p>পদবী: ${designation}</p>
+                <p>মোবাইল নম্বর: ${mobile}</p>
+                
+                <p>সন: ${year}</p>
+                <div class="actions">
+                    <a href="tel:${mobile}"><i>📞</i>কল</a>
+                    <a href="sms:${mobile}"><i>💬</i>মেসেজ</a>
+                </div>
+            `;
+
+            container.appendChild(card);
+        }
+
+        // Search Cards Function
+        function searchCards() {
+            const input = document.getElementById('search-input').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+
+            cards.forEach(card => {
+                const searchText = card.getAttribute('data-search');
+                if (searchText.includes(input)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        // Sample Data
+        const data = [
+            { name: "রফিকুল ইসলাম", mobile: "017xxxxxxxx", address: "ঢাকা", year: "২০২২", designation: "ছাত্র" },
+            { name: "মোস্তাফিজুর রহমান", mobile: "018xxxxxxxx", address: "চট্টগ্রাম", year: "২০২১", designation: "শিক্ষার্থী" },
+            { name: "আফসার উদ্দিন", mobile: "016xxxxxxxx", address: "সিলেট", year: "২০২০", designation: "গ্রাজুয়েট" },
+            { name: "জাকির হোসেন", mobile: "015xxxxxxxx", address: "খুলনা", year: "২০২২", designation: "শিক্ষক" },
+            { name: "সুমন মিয়া", mobile: "019xxxxxxxx", address: "রাজশাহী", year: "২০১৯", designation: "অধ্যাপক" }
+        ];
+
+        // Add cards dynamically
+        data.forEach((person, index) => {
+            createCard(index + 1, person.name, person.mobile, person.address, person.year, person.designation);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বছরের বাটন</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center; /* Center the container horizontally */
+            align-items: center;   /* Center the container vertically */
+            height: 100vh;         /* Full viewport height */
+            margin: 0;             /* Remove default margin */
+            background-image: linear-gradient(to right, #00d2ff, #928DAB);  /* Gradient background */
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap; /* Allow buttons to wrap into multiple lines */
+            justify-content: center; /* Center align the buttons */
+            gap: 10px; /* Space between buttons */
+            width: 100%; /* Ensure the container spans the full width */
+            max-width: 400px; /* Restrict container width for alignment */
+        }
+
+        .year-button {
+            padding: 15px 20px; /* Adjust padding for better button size */
+            font-size: 18px; /* Default font size */
+            background-image: linear-gradient(to right, #004e92, #000428);
+            color: white;
+            border: none;
+            border-radius: 10px; /* Rounded corners */
+            cursor: pointer;
+            width: calc(50% - 10px); /* Make two buttons per row (50% width minus gap) */
+            text-align: center;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Button hover effect */
+        .year-button:hover {
+            background-image: linear-gradient(to right, #32cd32, #006400); /* Darker green on hover */
+            transform: scale(1.1); /* Slightly enlarges the button */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Adds shadow effect */
+        }
+
+        /* Additional effect for when the button is clicked */
+        .year-button:active {
+            transform: scale(0.98); /* Shrinks slightly when clicked */
+            box-shadow: none; /* Removes the shadow when clicked */
+        }
+
+        /* Ensuring buttons maintain their spacing */
+        .year-button:focus {
+            outline: none; /* Removes the focus outline */
+        }
+
+        /* Media Query for smaller screens (to adjust layout for mobile) */
+        @media (max-width: 768px) {
+            .button-container {
+                max-width: 90%; /* Adjust container width for smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .button-container {
+                max-width: 100%; /* Ensure the container spans the full screen */
+            }
+
+            .year-button {
+                width: calc(50% - 10px); /* Ensure two buttons per row for smaller screens */
+                font-size: 16px; /* Slightly smaller font for mobile */
+                padding: 12px 15px; /* Adjust padding for smaller buttons */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Button container -->
+    <div class="button-container" id="button-container"></div>
+
+    <script>
+        // JavaScript to dynamically create buttons for each year from 2007 to the current year
+        const startYear = 2007; // 2007 থেকে শুরু
+        const currentYear = new Date().getFullYear();
+        const container = document.getElementById("button-container");
+
+        for (let year = startYear; year <= currentYear; year++) {
+            // Create a button for each year
+            const button = document.createElement("button");
+            button.innerText = year;
+            button.className = "year-button";
+
+            // Add click event listener
+            button.addEventListener("click", function() {
+                // Construct the page URL based on the year
+                const pageUrl = `${year}_page.html`;
+
+                // Redirect to the corresponding year page
+                window.location.href = pageUrl; 
+            });
+
+            // Append the button to the container
+            container.appendChild(button);
+        }
+    </script>
+
+</body>
+</html>
